@@ -102,7 +102,7 @@ CkEditor(Zengin Metin Editörü) sayesinde metinlere fotoğraf video hatta harit
 
 ### Kategorileme & Alt Kategorilendirme
 
-Kategorilerinizi ekleyebilir sağ üst tarafdan yeni kategori ekleyebilir veya eski bir kategorinin altına bağlayabilirsiniz eğer ana kategoriyi silerseniz tüm alt kategoriler yok olur
+Kategorilerinizi ekleyebilir sağ üst tarafdan yeni kategori ekleyebilir veya eski bir kategorinin altına bağlayabilirsiniz eğer ana kategoriyi silerseniz tüm alt kategoriler yok olur.
 
 ![](/readme/4.png)
 
