@@ -1,0 +1,71 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %} 
+  <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} Kayıt Ol - {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+  {% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Anasayfa</a></li>
+				<li class="active">Kayıt Ol</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+			<div class="col-md-12">
+				<div class="billing-details">
+					<div class="section-title">
+						<h3 class="title">Kayıt Ol</h3>
+					</div>
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{message.tags}}" role="alert">
+								{{ message }}
+							</div>
+						{% endfor %}
+					{% endif %}
+					<form method="post">
+						{% csrf_token %}
+						{% for field in form %}
+							<p>
+								{{ field.label_tag }}<br>
+								{{ field }}
+								{% if field.help_text %}
+									<small style="color: grey">{{ field.help_text }}</small>
+								{% endif %}
+								{% for error in field.errors %}
+									<p style="color: red">{{ error }}</p>
+								{% endfor %}
+							</p>
+						{% endfor %}
+						<button type="submit">Kayıt Ol</button>
+					</form>
+				</div>
+			</div>
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+{% endblock %}

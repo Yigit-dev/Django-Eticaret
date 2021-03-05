@@ -1,0 +1,192 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block title %} {{ product.title }} {% endblock %}
+{% block keywords %} {{ product.keywords }}{% endblock %}
+{% block description %} {{ product.description }}{% endblock %}
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+	<div class="container">
+		<ul class="breadcrumb">
+			<li><a href="#">Anasayfa</a></li>
+			<li><a href="#">Ürünlerimiz</a></li>
+			<li><a href="/category/{{ product.category_id }}/{{ product.category.slug }}">{{ product.category }}</a></li>
+			<li class="active">{{ product.title }}</li>
+		</ul>
+	</div>
+</div>
+<!-- /BREADCRUMB -->
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!--  Product Details -->
+			<div class="product product-details clearfix">
+				<div class="col-md-6">
+					<div id="product-main-view">
+						<div class="product-view">
+							<img src="{{ product.image.url}}" alt="">
+						</div>
+						{% for rs in images %}
+						<div class="product-view">
+							<img src="{{ rs.image.url}}" alt="">
+						</div>
+						{% endfor %}
+					</div>
+					<div id="product-view">
+						<div class="product-view">
+							<img src="{{ product.image.url}}" alt="">
+						</div>
+						{% for rs in images %}
+						<div class="product-view">
+							<img src="{{ rs.image.url}}" alt="">
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="product-body">
+						<div class="product-label">
+							<span>Yeni Ürün</span>
+							<span class="sale">-20%</span>
+						</div>
+						<h2 class="product-name">{{ product.title }}</h2>
+						<h3 class="product-price">${{ product.price}}
+						</h3>
+						<div>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<a href="#">Aşağıda Yorumlara Bakabilirsiniz</a>
+						</div>
+						<p>{{ product.description }}</p>
+
+						<div class="product-btns">
+							<form action="/order/addtocart/{{ product.id }}" method="post">
+								{% csrf_token %}
+								<div class="qty-input">
+									<span class="text-uppercase">Adet: </span>
+									<input class="input" type="number" min="0" max="{{ product.amount }}" value="1">
+								</div>
+								<button onclick="return confirm('Ürün Sepete eklensin mi ?')" type="submit"
+									class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Sepete Ekle</button>
+							</form>
+							<div class="pull-right">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="product-tab">
+						<ul class="tab-nav">
+							<li class="active"><a data-toggle="tab" href="#tab1">Detaylar</a></li>
+							<li><a data-toggle="tab" href="#tab2">Yorumlar</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab1" class="tab-pane fade in active">
+								<p>{{ product.detail | safe }}</p>
+							</div>
+							<div id="tab2" class="tab-pane fade in">
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="product-reviews">
+											{% for rs in comments %}
+											<div class="single-review">
+												<div class="review-heading">
+													<div><a href="#"><i class="fa fa-user-o"></i> {{ rs.user.first_name }}</a></div>
+													<div><a href="#"><i class="fa fa-clock-o"></i> {{ rs.create_at }}</a></div>
+													<div class="review-rating pull-right">
+														<i class="fa fa-star{% if rs.rate < 1 %}-o empty{% endif %}"></i>
+														<i class="fa fa-star{% if rs.rate < 2 %}-o empty{% endif %}"></i>
+														<i class="fa fa-star{% if rs.rate < 3 %}-o empty{% endif %}"></i>
+														<i class="fa fa-star{% if rs.rate < 4 %}-o empty{% endif %}"></i>
+														<i class="fa fa-star{% if rs.rate < 5 %}-o empty{% endif %}"></i>
+													</div>
+												</div>
+												<div class="review-body">
+													<b>{{ rs.subject }}</b>
+													<p>{{ rs.comment }}</p>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h4 class="text-uppercase">Yorum Yaz</h4>
+										{% if message in messages %}
+										{% for message in messages %}
+										<div class="alert alert-{{ message.tags }}" role="alert">
+											{{ message }}
+										</div>
+										{% endfor %}
+										{% endif %}
+										<p>Your email address will not be published.</p>
+										<form class="review-form" action="/product/addcomment/{{ product.id }}" method="post">
+											{% csrf_token %}
+											<div class="form-group">
+												<input class="input" type="text" placeholder="Subject" name="subject" id="id_subject" />
+											</div>
+											<!--
+												<div class="form-group">
+													<input class="input" type="email" placeholder="Email Address" />
+												</div>
+												-->
+											<div class="form-group">
+												<textarea class="input" name="comment" id="id_comment" placeholder="Your review"></textarea>
+											</div>
+											<div class="form-group">
+												<div class="input-rating">
+													<strong class="text-uppercase">Your Rating: </strong>
+													<div class="stars">
+														<input type="radio" id="star5" name="rate" value="5" /><label for="star5"></label>
+														<input type="radio" id="star4" name="rate" value="4" /><label for="star4"></label>
+														<input type="radio" id="star3" name="rate" value="3" /><label for="star3"></label>
+														<input type="radio" id="star2" name="rate" value="2" /><label for="star2"></label>
+														<input type="radio" id="star1" name="rate" value="1" /><label for="star1"></label>
+													</div>
+												</div>
+											</div>
+											{% if user.id is not None %}
+											<button class="primary-btn">Gönder</button>
+											{% else %}
+											Yorum eklemek için <a href="/login">Giriş </a> yapınız.
+											{% endif %}
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- /Product Details -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}

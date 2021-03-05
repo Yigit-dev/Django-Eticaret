@@ -1,0 +1,49 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} OpenCv Ekle- {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+            <li class="active">Fotoğraf Ekle</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <h1>Fotoğraf Ekle</h1>
+            <a href="../opencv/">Fotoğrafları Gör</a>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="title">
+                    {{ form.title }}
+                </div>
+                <div id="image">
+                    {{ form.image }}
+                </div>
+                <button type="submit" class="btn btn-danger">OpenCV'ye Resim Ekle</button>
+            </form>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}

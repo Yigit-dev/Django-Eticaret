@@ -1,0 +1,66 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} OpenCv Düzenle- {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+            <li class="active">OpenCv</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <h1>Fotoğraflarınıza birçok şekilde bakın</h1>
+            <form id="editForm" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div id="title">
+                    {{ image.title }}
+                </div>
+                <div id="title">
+                    {{ form.treshold.errors }}
+                    Siyah Beyaz Efekti 0-255 = {{ form.thresh }}
+                </div>
+                <input id="sendform" type="submit" value="OpenCV Çalıştır">
+                <div id="title_before">
+                    before filters
+                </div>
+                <div id="image">
+                    <img src="{{ image.image.url }}" height="150px" />
+                </div>
+                <div id="title_after">
+                    after filters
+                </div>
+                <div id="image">
+                    {% if image.modified_image %}
+                    <img src="{{ image.modified_image.url }}" height="150px" />
+                    {% else %}
+                    <img src="{{ image.image.url }}" height="150px" />
+                    {% endif %}
+                </div>
+
+            </form>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}

@@ -1,0 +1,48 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} OpenCv- {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+            <li class="active">OpenCv</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <h1>Fotoğraflarınız</h1>
+            <ul>
+                <a href="../add/">OpenCv'ye Resim Ekle</a>
+                {% for image in images %}
+                <li><img src="{{ image.image.url }}" height=150px /> - <img src="{{ image.modified_image.url }}"
+                        height=150px /> - <a href="../edit/{{image.id}}">{{ image.title }}</a></li>
+                {% empty %}
+                <li>Fotoğraf Yüklenmedi</li>
+                <br>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}

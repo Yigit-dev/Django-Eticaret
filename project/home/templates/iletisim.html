@@ -1,0 +1,66 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} İletişim- {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+	<div class="container">
+		<ul class="breadcrumb">
+			<li><a href="/">Anasayfa</a></li>
+			<li class="active">İletişim</li>
+		</ul>
+	</div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-4">
+				<div class="billing-details">
+					<div class="section-title">
+						<h3 class="title">İletişim Formu</h3>
+					</div>
+					{% if messages %}
+					{% for message in messages %}
+					<div class="alert alert-{{message.tags}}" role="alert">
+						{{ message }}
+					</div>
+					{% endfor %}
+					{% endif %}
+					<form action="" method="post">
+						{% csrf_token %}
+						<!--Güvenlik Önlemi-->
+						{{ form.as_p}}
+						<input type="submit" value="Gönder">
+					</form>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="section-title">
+					<h3 class="title">İletişim Bilgilerimiz</h3>
+				</div>
+				{{ setting.contact|safe }}
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}

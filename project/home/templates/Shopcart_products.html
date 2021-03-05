@@ -1,0 +1,87 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %} 
+  <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} Satın Alma {% endblock %}
+{% block keywords %}{{ categorydata.keywords }}{% endblock %}
+{% block description %}{{ categorydata.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+  {% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Anasayfa</a></li>
+				<li class="active">Satın Alma</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="order-summary clearfix">
+						<div class="section-title">
+							<h3 class="title">Satın Alınan Ürünler</h3>
+						</div>
+				<table class="shopping-cart-table table">
+					<thead>
+						<tr>
+							<th>Ürün</th>
+							<th></th>
+							<th class="text-center">Fiyat</th>
+							<th class="text-center">Adet</th>
+							<th class="text-center">Sonuç</th>
+							<th class="text-center"></th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for rs in schopcart %}
+						<tr>
+							<td class="thumb"><img src="{{ rs.product.image.url }}" alt=""></td>
+							<td class="details">
+								<a href="#">{{ rs.product }}</a>
+							</td>
+							<td class="price text-center"><strong>${{ rs.product.price }}</strong><br><del class="font-weak"><small>$40</small></del></td>
+							<td class="qty text-center"><strong>{{ rs.quantity }}</strong></td>
+							<td class="text-right"><a href="/order/deletefromcart/{{ rs.id }}" onclick="return confirm('Silmek istediğinizden Emin misiniz ?')" class="main-btn icon-btn"><i class="fa fa-close"></i></a></td>
+						</tr>
+					{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="empty" colspan="3"></th>
+							<th>Toplam</th>
+							<th colspan="2" class="sub-total">$ {{ total }}</th>
+						</tr>
+						<tr>
+							<th class="empty" colspan="3"></th>
+							<th>Kargo</th>
+							<td colspan="2">Bedava</td>
+						</tr>
+						<tr>
+							<th class="empty" colspan="3"></th>
+							<th>Toplam</th>
+							<th class="total" colspan="2">${{ total }}</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %} 
+  <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} {{ setting.title }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+  {% include "sidebar.html" %}
+{% endblock %}
+
+{% block slider %}
+  {% include "slider.html" %}
+{% endblock %}
+
+{% block content %}
+  {% include "content.html" %}
+{% endblock %}

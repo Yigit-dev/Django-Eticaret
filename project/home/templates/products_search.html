@@ -1,0 +1,56 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %} 
+  <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} Ürün arama sonuçları {% endblock %}
+{% block keywords %}{{ categorydata.keywords }}{% endblock %}
+{% block description %}{{ categorydata.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+  {% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Anasayfa</a></li>
+				<li class="active">{{ categorydata.title }}</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<table cellpadding="3" width="1200">
+					<tr>
+						<th>Image</th>
+						<th>Product Name</th>
+						<th>Category</th>
+						<th>Price</th>
+					</tr>
+					{% for rs in products %}
+						<tr>
+							<td><a href="/product/{{ rs.id }}/{{ rs.slug }}"><img src="{{ rs.image.url }}" style="width: 150px;" alt=""></a></td>
+							<td><h4 class="product-name"><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4></td>
+							<td><a href="/category/{{ rs.category.id }}/{{ rs.category.slug }}">{{ rs.category }}</a></td>
+							<td><h4>${{ rs.price }}</h4></td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+{% endblock %}

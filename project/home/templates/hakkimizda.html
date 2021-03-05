@@ -1,0 +1,41 @@
+<!-- Ben bu sayfada homebase' e bağlı olarak çalışıcam -->
+{% extends "homebase.html" %}
+{% block head %} 
+  <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+<!-- Her sayfamın kendine özgü bir title ı keywords ü vs olacak -->
+{% block title %} Hakkımızda- {{ setting.company }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+<!-- include işlemlerimi yapıyorum  -->
+{% block sidebar %}
+  {% include "sidebar.html" %}
+{% endblock %}
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+	<div class="container">
+		<ul class="breadcrumb">
+			<li><a href="/">Anasayfa</a></li>
+			<li class="active">Hakkımızda</li>
+		</ul>
+	</div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+		  {{ setting.about_us|safe }}
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock %}
